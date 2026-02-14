@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        margin: 0;
+        padding: 0;
+        font-family: 'Poppins', sans-serif;
+        box-sizing: border-box;
+    }
+    .container
+    {
+        width: 100%;
+        min-height: 100vh;
+        background: #d0eaff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .product
+    {
+        width: 90%;
+        max-width: 750px;
+        display: flex;
+    }
+    .gallery
+    {
+        flex-basis: 47%;
+        background: #241e20;
+        transform: scale(1.08);
+        box-shadow: -10px 5px 10px 10px rgba(0, 0, 0, 0.1);
+        position: relative;
+    }
+    .gallery img
+    {
+        width: 100%;
+        display: block;
+        padding-top: 100px;
+    }
+    .details{
+        flex-basis: 53%;
+        background: #fff;
+        padding: 40px;
+        padding-left: 60px;
+        box-shadow: -10px 5px 10px 10px rgba(0, 0, 0, 0.1);
+        font-size: 13px;
+        font-size: 13px;
+        font-weight: 500;
+        color: #777;
+    }
+    .details h1
+    {
+        color: #333;
+        font-size: 35px;
+    }
+    .details h2
+    {
+        color: #555;
+        font-size: 30px;
+        font-weight: 600;
+    }
+    .details h3
+    {
+        color: #fc0505;
+        margin-bottom: 20px;
+    }
+    .details form
+    {
+        font-size: 15px;
+        font-weight: 400;
+    }
+    .size-select
+    {
+        display: flex;
+        align-items: center;
+        margin-top: 50px;
+    }
+    .size-select p
+    {
+        width: 70px;
+    }
+    .size-select input:checked + span
+    {
+        color: #f7aca9;
+        font-weight: 600;
+    }
+    .size-select input
+    {
+        display: none;
+    }
+    .size-select span
+    {
+        padding: 5px;
+        margin-right: 10px;
+        cursor: pointer;
+    }
+    .color-select{
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .color-select p
+    {
+        width: 75px;
+    }
+    .color-select span
+    {
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        margin-right: 15px;
+        cursor: pointer;
+    }
+    
+    .color-1
+    {
+        background: red;
+    }
+    .color-2
+    {
+        background: #07fb89;
+    }
+    .color-3
+    {
+        background: rgb(0, 217, 255);
+    }
+    .color-4
+    {
+        background: pink;
+    }
+    .color-select input
+    {
+        display: none;
+    }
+    .color-select input:checked + span
+    {
+        transform: scale(0.7);
+        box-shadow: 0 0 0 4px #fff, 0 0 0 6px #000;
+    }
+    .quantity-select{
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .quantity-select p
+    {
+        width: 75px;
+    }
+    .quantity-select input
+    {
+        background: #eee;
+        border: 0;
+        outline: 0;
+        padding: 2px 2px 2px 15px;
+        width: 50px;
+        border-radius: 12px;
+    }
+    form button
+    {
+        background: #fb0303;
+        color: #fff;
+        font-size: 17px;
+        width: 100%;
+        padding: 10px;
+        border-radius: 30px;
+        border: 0;
+        outline: 0;
+        margin-top: 50px;
+        box-shadow: 0 10px 10px #fdc4c4;
+        cursor: pointer;
+    }
+    .controls
+    {
+        position: absolute;
+        bottom: 40px;
+        right: 20px;
+    }
+    .btn
+    {
+        display: block;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        margin: 10px;
+        cursor: pointer;
+    }
+    .btn.active{
+        background: #f03f3f;
+    }
+    /* next */
+        .bar {
+        color: #fff;
+        background: #000;
+        width: 100%;
+        height: 40px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        transition: .2s;
+        font-size: 14px;
+    }
+
+    .bar a {
+        color: white;
+        text-decoration: none;
+    }
+
+    .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        z-index: 100;
+        width: 100%;
+        height: 120px;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        padding: 0 40px;
+    }
+
+    .menu_bar {
+        display: flex;
+        justify-content: space-around;
+        gap: 40px;
+        /* flex: 1; */
+    }
+
+    .child {
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 1px;
+        color: #000;
+    }
+
+    /* .child:hover {
+        border-bottom: 2px solid #000;
+        padding-bottom: 5px;
+    } */
+
+    .img_logo {
+        width: 120px;
+        margin: 0 30px;
+    }
+
+    .icons {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+    }
+
+    .i {
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .i:hover {
+        transform: scale(1.1);
+    }
+
+    input[type="checkbox"] {
+        display: none;
+    }
+
+    .search-container {
+        display: none;
+        position: absolute;
+        top: 120px;
+        right: 40px;
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 101;
+    }
+
+    input[type="checkbox"]:checked + .search-container {
+        display: block;
+    }
+
+    .search-button {
+        cursor: pointer;
+        background-color: transparent;
+        color: #000;
+        padding: 0;
+        border: none;
+        font-weight: 600;
+        font-size: 12px;
+        transition: 0.3s;
+    }
+
+    .search-button:hover {
+        color: #666;
+    }
+
+    input[type="search"] {
+        border: 1px solid #ddd;
+        padding: 10px 12px;
+        border-radius: 6px;
+        width: 300px;
+        height: 40px;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    input[type="search"]:focus {
+        border: 1px solid #000;
+        box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+    }
+
+    button {
+        padding: 10px 20px;
+        border: 1px solid #000;
+        color: white;
+        background: #000;
+        border-radius: 6px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: 0.3s;
+        margin: 0 5px;
+    }
+
+    button:hover {
+        background: #333;
+        border-color: #333;
+    }
+
+</style>
+<body>
+    
+    <div class="header">
+        <div class="menu_bar">
+            <a class="child" href="luxandria.html"><div>HOME</div></a>
+            <a class="child" href="luxandria.html"><div>ABOUT</div></a>
+            <a class="child" href="address.html"><div>CONTACT</div></a>
+        </div>
+        <div class="logo">
+            <img src="https://luxandria.com/cdn/shop/files/LOGO_02.png?v=1758890616&width=280" class="img_logo">
+        </div>
+        <div class="icons">
+            <a href="login.html"><div class="i"><svg xmlns="http://www.w3.org/2000/svg" target="_blank" cursor="pointer" height="30px" viewBox="0 -960 960 960" width="48px" fill="#000"><path d="M372-523q-42-42-42-108t42-108q42-42 108-42t108 42q42 42 42 108t-42 108q-42 42-108 42t-108-42ZM160-160v-94q0-38 19-65t49-41q67-30 128.5-45T480-420q62 0 123 15.5T731-360q31 14 50 41t19 65v94H160Zm60-60h520v-34q0-16-9.5-30.5T707-306q-64-31-117-42.5T480-360q-57 0-111 11.5T252-306q-14 7-23 21.5t-9 30.5v34Zm324.5-346.5Q570-592 570-631t-25.5-64.5Q519-721 480-721t-64.5 25.5Q390-670 390-631t25.5 64.5Q441-541 480-541t64.5-25.5ZM480-631Zm0 411Z"/></svg></div></a>
+            <label for="toggle-search" class="search-button">Search</label>
+            <input type="checkbox" id="toggle-search" />
+            <div class="search-container">
+                <form action="/search" method="GET">
+                    <input type="search" id="site-search" name="q" placeholder="Search Fragrances..." />
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <a href=""><div class="i"><svg xmlns="http://www.w3.org/2000/svg" cursor="pointer" height="30px" viewBox="0 -960 960 960" width="48px" fill="#000"><path d="M220-80q-24 0-42-18t-18-42v-520q0-24 18-42t42-18h110v-10q0-63 43.5-106.5T480-880q63 0 106.5 43.5T630-730v10h110q24 0 42 18t18 42v520q0 24-18 42t-42 18H220Zm0-60h520v-520H630v90q0 12.75-8.68 21.37-8.67 8.63-21.5 8.63-12.82 0-21.32-8.63-8.5-8.62-8.5-21.37v-90H390v90q0 12.75-8.68 21.37-8.67 8.63-21.5 8.63-12.82 0-21.32-8.63-8.5-8.62-8.5-21.37v-90H220v520Zm170-580h180v-10q0-38-26-64t-64-26q-38 0-64 26t-26 64v10ZM220-140v-520 520Z"/></svg></div></a>
+        </div>
+    </div>
+    <div class="container">
+        <div class="product">
+            <div class="gallery">
+                <img src="whiteI.png" id="productImg">
+                <div class="controls">
+                    <span class="btn active"></span>
+                    <span class="btn"></span>
+                    <span class="btn"></span>
+                </div>
+            </div>
+            <div class="details">
+                <h1>Imperium Inspired By<br> Creed Aventus</h1>
+                <h2>$15.00</h2>
+                <h3>50% OFF</h3>
+                <p>  A very strong upfront scent of fresh pineapple,<br> blackcurrants, and bergamot followed by a refined heart<br> of jasmine and patchouli; with a strong perfume,<br> oakmoss, ambergris, and vanilla come trailing behind it,<br> leaving the strongest memory and a lot of respect.<br>       
+                    Notes:<br>
+                    Top: Pineapple, Blackcurrant, Bergamot, Apple<br>
+                    Middle: Birch, Patchouli, Jasmine<br>
+                    Base: Oakmoss, Ambergris, Vanilla<br>
+                    
+                <form>
+                    <!-- <div class="size-select">
+                        <p>Size</p>
+                        <label for="small">
+                            <input type="radio" name="size" id="small">
+                            <span>S</span>
+                        </label>
+                        <label for="medium">
+                            <input type="radio" name="size" id="medium">
+                            <span>M</span>
+                        </label>
+                        <label for="large">
+                            <input type="radio" name="size" id="large">
+                            <span>L</span>
+                        </label>
+                        <label for="x-large">
+                            <input type="radio" name="size" id="x-large">
+                            <span>XL</span>
+                        </label>
+                        <label for="xx-large">
+                            <input type="radio" name="size" id="xx-large">
+                            <span>XXL</span>
+                        </label>
+                    </div>
+                    <div class="color-select">
+                        <p>Color</p>
+                        <label for="red">
+                            <input type="radio" name="color" id="red">
+                            <span class="color-1"></span>
+                        </label>
+                        <label for="green">
+                            <input type="radio" name="color" id="green">
+                            <span class="color-2"></span>
+                        </label>
+                        <label for="blue">
+                            <input type="radio" name="color" id="blue">
+                            <span class="color-3"></span>
+                        </label>
+                        <label for="pink">
+                            <input type="radio" name="color" id="pink">
+                            <span class="color-4"></span>
+                        </label>
+                    </div> -->
+                    <div class="quantity-select">
+                        <p>Quantity</p>
+                        <input type="number" value="1">
+                    </div>
+                    <button>Buy Now</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script>
+        //let productImg = document.getElementById("productImg")
+        //let btn = document.getElementsByClassName("btn");
+        //btn[0].onclick = function(){
+        //    productImg.src = "front.png";
+        //    for(bt of btn){
+        //        bt.classList.remove("active")
+        //    }
+        //    this.classList.add("active")
+        //}
+        //btn[1].onclick = function(){
+        //    productImg.src = "side.png";
+        //    for(bt of btn){
+        //        bt.classList.remove("active")
+        //    }
+        //    this.classList.add("active")
+        //}
+        //btn[2].onclick = function(){
+        //    productImg.src = "back.png";
+        //    for(bt of btn){
+        //        bt.classList.remove("active")
+        //    }
+        //    this.classList.add("active")
+        //}
+    </script>
+</body>
+</html>

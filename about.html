@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    *{
+        font-family: 'Poppins', sans-serif;
+        box-sizing: border-box;
+    }
+     .header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        position: sticky;
+        z-index: 100;
+        width: 100%;
+        height: 120px;
+        background: white;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        padding: 0 40px;
+    }
+
+    .menu_bar {
+        display: flex;
+        justify-content: space-around;
+        gap: 40px;
+        /* flex: 1; */
+    }
+
+    .child {
+        cursor: pointer;
+        transition: 0.3s;
+        font-weight: 600;
+        font-size: 14px;
+        letter-spacing: 1px;
+        color: #000;
+    }
+
+    /* .child:hover {
+        border-bottom: 2px solid #000;
+        padding-bottom: 5px;
+    } */
+
+    .img_logo {
+        width: 120px;
+        margin: 0 30px;
+    }
+
+    .icons {
+        display: flex;
+        gap: 25px;
+        align-items: center;
+    }
+     .i {
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .i:hover {
+        transform: scale(1.1);
+    }
+
+    input[type="checkbox"] {
+        display: none;
+    }
+
+    .search-container {
+        display: none;
+        position: absolute;
+        top: 120px;
+        right: 40px;
+        background: white;
+        padding: 15px;
+        border-radius: 8px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 101;
+    }
+
+    input[type="checkbox"]:checked + .search-container {
+        display: block;
+    }
+
+    .search-button {
+        cursor: pointer;
+        background-color: transparent;
+        color: #000;
+        padding: 0;
+        border: none;
+        font-weight: 600;
+        font-size: 12px;
+        transition: 0.3s;
+    }
+
+    .search-button:hover {
+        color: #666;
+    }
+
+    input[type="search"] {
+        border: 1px solid #ddd;
+        padding: 10px 12px;
+        border-radius: 6px;
+        width: 300px;
+        height: 40px;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    input[type="search"]:focus {
+        border: 1px solid #000;
+        box-shadow: 0 0 0 3px rgba(0,0,0,0.05);
+    }
+    .n-header
+    {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        border-bottom: 2px solid #9f9e9e;
+    }
+    p
+    {
+        font-family: 'Poppins', sans-serif;
+        box-sizing: border-box;
+    }
+    /* footer */
+    .footer
+    {
+        display: flex;
+        justify-content: space-around;
+        margin-top: 50px;
+        padding-top: 100px;
+        background: rgb(5, 1, 38);
+        color: white;
+        width: 100%;
+        height: 200px;
+    }
+    .or{
+        display: flex;
+        flex-direction: colu;
+    }
+    .about
+    {
+        display: flex;
+        flex-direction: column;
+    }
+    .ab{
+        color: white;
+    }
+    
+</style>
+<body>
+    <div class="header">
+        <div class="menu_bar">
+            <a class="child" href="luxandria.html"><div>HOME</div></a>
+            <a class="child" href="about.html"><div>ABOUT</div></a>
+            <a class="child" href="address.html"><div>CONTACT</div></a>
+        </div>
+        <div class="logo">
+            <img src="https://luxandria.com/cdn/shop/files/LOGO_02.png?v=1758890616&width=280" class="img_logo">
+        </div>
+        <div class="icons">
+            <a href="login.html"><div class="i"><svg xmlns="http://www.w3.org/2000/svg" target="_blank" cursor="pointer" height="30px" viewBox="0 -960 960 960" width="48px" fill="#000"><path d="M372-523q-42-42-42-108t42-108q42-42 108-42t108 42q42 42 42 108t-42 108q-42 42-108 42t-108-42ZM160-160v-94q0-38 19-65t49-41q67-30 128.5-45T480-420q62 0 123 15.5T731-360q31 14 50 41t19 65v94H160Zm60-60h520v-34q0-16-9.5-30.5T707-306q-64-31-117-42.5T480-360q-57 0-111 11.5T252-306q-14 7-23 21.5t-9 30.5v34Zm324.5-346.5Q570-592 570-631t-25.5-64.5Q519-721 480-721t-64.5 25.5Q390-670 390-631t25.5 64.5Q441-541 480-541t64.5-25.5ZM480-631Zm0 411Z"/></svg></div></a>
+            <label for="toggle-search" class="search-button">Search</label>
+            <input type="checkbox" id="toggle-search" />
+            <div class="search-container">
+                <form action="/search" method="GET">
+                    <input type="search" id="site-search" name="q" placeholder="Search Fragrances..." />
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <a href=""><div class="i"><svg xmlns="http://www.w3.org/2000/svg" cursor="pointer" height="30px" viewBox="0 -960 960 960" width="48px" fill="#000"><path d="M220-80q-24 0-42-18t-18-42v-520q0-24 18-42t42-18h110v-10q0-63 43.5-106.5T480-880q63 0 106.5 43.5T630-730v10h110q24 0 42 18t18 42v520q0 24-18 42t-42 18H220Zm0-60h520v-520H630v90q0 12.75-8.68 21.37-8.67 8.63-21.5 8.63-12.82 0-21.32-8.63-8.5-8.62-8.5-21.37v-90H390v90q0 12.75-8.68 21.37-8.67 8.63-21.5 8.63-12.82 0-21.32-8.63-8.5-8.62-8.5-21.37v-90H220v520Zm170-580h180v-10q0-38-26-64t-64-26q-38 0-64 26t-26 64v10ZM220-140v-520 520Z"/></svg></div></a>
+        </div>
+    </div>
+    <div class="n-header">
+        <h1>About Us</h1>
+        <h2>Luxandria- the Art of Modern Luxury.</h2>
+        <p>At Luxandria, we reckon that in seeing, feeling, expressing, and believing, true <br>luxury conviction can be achieved. Our essence originated around the<br> orientation of all the principles of elegance—the aromas of finesse—no longer <br>for the select enlightened few but available for all who light up an enlightened <br>path of sophistication and individuality.<br>It is a world of Luxandria where luxury meets sound-each perfume lightly formulated to keep the splendor of eternity, stir emotions, and enable every mundane to be gasped at.</p>
+        <h2>Why Luxandria?</h2>
+        <h2>💎 Refined Luxury</h2>
+        <p>With an eye to detail, our perfumes keep all the beauty of high-end fragrances<br> at a reasonable price range. </p>
+        <h2>✨ Crafted to Last</h2>
+        <p>The composition of each scent is crafted in such a way that it is imposed on <br>elegance, long-lasting, and balanced, stops people dead in their tracks, and<br> leaves an imprint. </p>
+        <h2>🤍 A Fragrance for Every Mood</h2>
+        <p>From bold, graceful, or enigmatic—these aromatic scents suit every style like<br> occasions, moods, and all that comes in between and blend into and define your<br> story. </p>
+        <h2>🚀 Experience with Ease</h2>
+        <p>Our perfumes enhance every step of the fragrance journey to be exciting and <br>unforgettable, from free home delivery right through to easy returns.</p>
+    </div>
+    <div class="n-header">
+        <h1>Our Vision</h1>
+        <p>At Luxandria, we<br> seek to create an experience with more than just perfumes: we want to create a world where fragrance is not worn, but rather lived so that, at<br> the same time, we help you decide your presence as you trail elegance <br>wherever you go.</p>
+    </div>
+    <div class="dis n-header">
+        <h1>Discover Luxandria</h1>
+        <p>Open the door to a luxury world and discover fragrances that oxygenate<br> elegance, personality, and age-old beauty, for luxury here, is not a right; it is a<br> lifetime experience</p>
+    </div>
+    <!--footer-->
+    <div class="or">
+        <div class="footer">
+               <div class="log">
+                 <img height="80px" src="https://luxandria.com/cdn/shop/files/LOGO_03.png?v=1758890616&width=320" width="200px" class="img_logo">
+             </div>
+             <div class="about">About:
+                 <div class="ab">About Luxandria Family</div>
+                 <div class="ab">Searching Is Easy For You!</div>
+                 <div class="ab">Contact Us Here...</div>
+                 <div class="ab">Refund Policy</div>
+             </div>
+             <div class="about">Quick Links:
+                 <div class="ab">All Collection</div>
+                 <a class="ab" href="https://www.facebook.com/luxandriaofficial" target="_blank"><div>Join Us On Facebook</div></a>
+                 <a class="ab" href="https://www.facebook.com/luxandriaofficial" target="_blank"><div>Join Us On Instagram</div></a>
+                 <a class="ab" href="https://www.facebook.com/luxandriaofficial" target="_blank"><div>Join Us On Tiktok</div></a>
+             </div>
+             <div class="about">Talk To Us:
+                 <div class="ab">Contect with us 24/7</div>
+                 <div class="ab">WhatsApp: +923006704579</div>
+                 <div class="ab">Address: R-158/18, Federal B Area, Karachi, Pakistan.</div>
+             </div>
+           </div>
+     </div>
+</body>
+</html>

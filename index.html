@@ -401,6 +401,30 @@ Regular 400 Italic;
         background: #c0392b;
         border-color: #c0392b;
     }
+     @media (max-width: 1024px) {
+        .header
+        {
+            width: 1000px;
+            height: 120px;
+        }
+
+    }
+    @media (max-width: 600px){
+        .header{
+            flex-direction: column;
+            width: 120%;
+        }
+        .main{
+            flex-direction: column;
+        }
+    }
+    @media (max-width: 768px){
+        .header
+        {
+            width: 700px;
+            height: 120px;
+        }
+    }
 </style>
 <body>
     <div class="column">

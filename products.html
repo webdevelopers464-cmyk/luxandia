@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
-    <link rel="icon" href="LOGO_03.png">
 </head>
 <style>
      *{
@@ -148,33 +147,12 @@
         height: 300px;
 
     }
-     .bar {
-        color: #fff;
-        background: #000;
-        width: 100%;
-        height: 40px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        transition: .2s;
-        font-size: 14px;
-    }
-
-    .bar a {
-        color: white;
-        text-decoration: none;
-    }
 </style>
 <body>
     <!-- header -->
-         <a href="./products.html" target="_blank">
-        <div class="bar">
-            <div class="c">Discovery luxury in every note and enjoy free shipping on your first order →</div>
-        </div>
-    </a>
     <div class="header">
         <div class="menu_bar">
-            <a class="child" href="index.html"><div>HOME</div></a>
+            <a class="child" href="luxandria.html"><div>HOME</div></a>
             <a class="child" href="about.html"><div>ABOUT</div></a>
             <a class="child" href="address.html"><div>CONTACT</div></a>
         </div>
@@ -196,12 +174,72 @@
     </div>
      <!--main-->
      <h1>Products:</h1>
-     <img src="https://luxandria.com/cdn/shop/files/White-and_Brown_Stylish_Appliances_Product_Features_Instagram_Post_20251114_000529_0006.png?v=1763062360&width=533" alt="floralia" class="floralia">
-     <img src="https://luxandria.com/cdn/shop/files/LUXANDRIA_WEBSITE_IMAGE_01.jpg?v=1761297912&width=750" alt="Imperium" class="floralia">
-     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7K1uwV_xhle_WuK9TT4I8_fiJ6Ca6IDr1hA&s" alt="paradise bloom" class="floralia">
-     <img src="https://luxandria.com/cdn/shop/files/White-and_Brown_Stylish_Appliances_Product_Features_Instagram_Post_20251114_000529_0002.png?v=1763063536&width=533" alt="safroon" class="floralia">
-     <img src="https://luxandria.com/cdn/shop/files/White-and_Brown_Stylish_Appliances_Product_Features_Instagram_Post_20251114_000529_0004.png?v=1763063256&width=533" alt="Sunkissed Muse" class="floralia">
-     <img src="https://luxandria.com/cdn/shop/files/White-and_Brown_Stylish_Appliances_Product_Features_Instagram_Post_20251114_000529_0005.png?v=1763063464&width=533" alt="Wild Sovereign" class="floralia">
+     <style>
+         .products-grid{display:flex;flex-wrap:wrap;gap:18px;margin:18px 0}
+         .product{width:240px;background:#fff;padding:12px;border-radius:8px;box-shadow:0 4px 12px rgba(0,0,0,0.06);text-align:center}
+         .product img{width:100%;height:200px;object-fit:cover;border-radius:6px}
+         .product .title{font-weight:700;margin:10px 0;font-size:14px}
+         .product .add-to-cart{background:#000;color:#fff;border:none;padding:8px 12px;border-radius:6px;cursor:pointer;font-weight:600}
+         .product .add-to-cart:hover{opacity:.9}
+         .cart-note{position:fixed;right:18px;bottom:18px;background:#000;color:#fff;padding:10px 14px;border-radius:8px;display:none}
+     </style>
+     <div class="products-grid" id="products-grid">
+         <div class="product" data-title="Floralia" data-url="products.html#floralia">
+             <img src="https://luxandria.com/cdn/shop/files/White-and_Brown_Stylish_Appliances_Product_Features_Instagram_Post_20251114_000529_0006.png?v=1763062360&width=533" alt="floralia">
+             <div class="title">Floralia</div>
+             <button class="add-to-cart">Add to cart</button>
+         </div>
+         <div class="product" data-title="Imperium" data-url="products.html#imperium">
+             <img src="https://luxandria.com/cdn/shop/files/LUXANDRIA_WEBSITE_IMAGE_01.jpg?v=1761297912&width=750" alt="Imperium">
+             <div class="title">Imperium</div>
+             <button class="add-to-cart">Add to cart</button>
+         </div>
+         <div class="product" data-title="Paradise Bloom" data-url="products.html#paradise">
+             <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT7K1uwV_xhle_WuK9TT4I8_fiJ6Ca6IDr1hA&s" alt="paradise bloom">
+             <div class="title">Paradise Bloom</div>
+             <button class="add-to-cart">Add to cart</button>
+         </div>
+         <div class="product" data-title="Safroon" data-url="products.html#safroon">
+             <img src="https://luxandria.com/cdn/shop/files/White-and_Brown_Stylish_Appliances_Product_Features_Instagram_Post_20251114_000529_0002.png?v=1763063536&width=533" alt="safroon">
+             <div class="title">Safroon</div>
+             <button class="add-to-cart">Add to cart</button>
+         </div>
+         <div class="product" data-title="Sunkissed Muse" data-url="products.html#sunkissed">
+             <img src="https://luxandria.com/cdn/shop/files/White-and_Brown_Stylish_Appliances_Product_Features_Instagram_Post_20251114_000529_0004.png?v=1763063256&width=533" alt="Sunkissed Muse">
+             <div class="title">Sunkissed Muse</div>
+             <button class="add-to-cart">Add to cart</button>
+         </div>
+         <div class="product" data-title="Wild Sovereign" data-url="products.html#wild">
+             <img src="https://luxandria.com/cdn/shop/files/White-and_Brown_Stylish_Appliances_Product_Features_Instagram_Post_20251114_000529_0005.png?v=1763063464&width=533" alt="Wild Sovereign">
+             <div class="title">Wild Sovereign</div>
+             <button class="add-to-cart">Add to cart</button>
+         </div>
+     </div>
+     <div class="cart-note" id="cart-note">Added to cart</div>
+     <script>
+         (function(){
+             const KEY = 'luxandriaCart';
+             function notify(msg){
+                 const el = document.getElementById('cart-note');
+                 el.textContent = msg; el.style.display = 'block';
+                 setTimeout(()=> el.style.display = 'none', 1400);
+             }
+             function getCart(){ try{ return JSON.parse(localStorage.getItem(KEY) || '[]'); }catch(e){ return []; } }
+             function setCart(c){ localStorage.setItem(KEY, JSON.stringify(c)); }
+             document.querySelectorAll('.product').forEach(prod => {
+                 const btn = prod.querySelector('.add-to-cart');
+                 btn.addEventListener('click', ()=>{
+                     const title = prod.dataset.title || prod.querySelector('.title').textContent;
+                     const image = prod.querySelector('img').src;
+                     const url = prod.dataset.url || window.location.href;
+                     const cart = getCart();
+                     cart.push({ title, image, url });
+                     setCart(cart);
+                     notify('Added "' + title + '" to cart');
+                 });
+             });
+         })();
+     </script>
     <!-- footer -->
      <div class="or">
         <div class="footer">

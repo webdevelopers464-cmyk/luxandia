@@ -1,11 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ordered Place PRO</title>
-    <link rel="icon" href="LOGO_03.png">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
@@ -422,21 +420,27 @@
     <div class="container">
         <!-- Order Form -->
         <div class="order-form-card">
-            <h2>Place Your Order</h2>
-            <form id="orderForm">
+                <h2>Place Your Order</h2>
+            <form id="orderForm" action="https://formspree.io/f/xdalzpqb" method="POST">
+            <!-- <form action="https://formspree.io/f/xdalzpqb" method="POST"> -->
                 <div class="form-group">
                     <label for="fullName">Full Name</label>
-                    <input type="text" id="fullName" placeholder="Enter your full name" required>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
                 </div>
 
                 <div class="form-group">
                     <label for="phoneNumber">Phone Number</label>
-                    <input type="tel" id="phoneNumber" placeholder="Enter your phone number" required>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
                 </div>
 
                 <div class="form-group">
                     <label for="product">Product</label>
-                    <select id="product" required>
+                    <select id="product" name="product" required>
                         <option value="">Select a product</option>
                         <option value="Floralia - Rs 1500">Floralia - Rs 1500</option>
                         <option value="Mystic Rose - Rs 1800">Mystic Rose - Rs 1800</option>
@@ -449,15 +453,14 @@
 
                 <div class="form-group">
                     <label for="quantity">Quantity</label>
-                    <input type="number" id="quantity" value="1" min="1" required>
+                    <input type="number" id="quantity" name="quantity" value="1" min="1" required>
                 </div>
 
                 <div class="form-group">
                     <label for="address">Address</label>
-                    <textarea id="address" placeholder="Enter your delivery address" required></textarea>
+                    <textarea id="address" name="address" placeholder="Enter your delivery address" required></textarea>
                 </div>
-
-                <button type="submit" class="submit-btn">Submit Order</button>
+                    <button type="submit" class="submit-btn">Submit Order</button>
             </form>
         </div>
 
@@ -502,6 +505,7 @@
     </div>
 
     <script>
+
         // Initialize orders array from localStorage
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
         let editingIndex = -1;
@@ -533,14 +537,16 @@
         document.getElementById('orderForm').addEventListener('submit', function(e) {
             e.preventDefault();
 
+            const form = this;
             const fullName = document.getElementById('fullName').value.trim();
             const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const emailValue = document.getElementById('email').value.trim();
             const product = document.getElementById('product').value;
             const quantity = parseInt(document.getElementById('quantity').value);
             const address = document.getElementById('address').value.trim();
 
             // Validate all fields
-            if (!fullName || !phoneNumber || !product || !quantity || !address) {
+            if (!fullName || !phoneNumber || !emailValue || !product || !quantity || !address) {
                 alert('Please fill in all fields!');
                 return;
             }
@@ -553,6 +559,7 @@
             const order = {
                 fullName,
                 phoneNumber,
+                email: emailValue,
                 product,
                 quantity,
                 price,
@@ -580,8 +587,18 @@
             // Show success popup
             showPopup();
 
+            // Send to Formspree using fetch
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).catch(err => console.log('Formspree submission complete'));
+
             // Reset form
-            this.reset();
+            form.reset();
         });
 
         // Show popup
@@ -638,6 +655,7 @@
             // Fill form with order data
             document.getElementById('fullName').value = order.fullName;
             document.getElementById('phoneNumber').value = order.phoneNumber;
+            document.getElementById('email').value = order.email || '';
             document.getElementById('product').value = order.product;
             document.getElementById('quantity').value = order.quantity;
             document.getElementById('address').value = order.address;

@@ -401,6 +401,37 @@
         .table-wrapper {
             overflow-x: auto;
         }
+        /* Quantity control */
+        .qty-control {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-control .qty-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: white;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .qty-control input[type="text"] {
+            width: 48px;
+            text-align: center;
+            padding: 8px 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -453,7 +484,11 @@
 
                 <div class="form-group">
                     <label for="quantity">Quantity</label>
-                    <input type="number" id="quantity" name="quantity" value="1" min="1" required>
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" id="qtyMinus">−</button>
+                        <input type="text" id="quantity" name="quantity" value="1" readonly required>
+                        <button type="button" class="qty-btn" id="qtyPlus">+</button>
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -631,7 +666,13 @@
                     <td>${order.fullName}</td>
                     <td>${order.phoneNumber}</td>
                     <td>${order.product.split(' - ')[0]}</td>
-                    <td>${order.quantity}</td>
+                    <td>
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeOrderQty(${index}, -1)">−</button>
+                            <span id="order-qty-${index}" style="min-width:32px;display:inline-block;text-align:center;font-weight:600">${order.quantity}</span>
+                            <button class="qty-btn" onclick="changeOrderQty(${index}, 1)">+</button>
+                        </div>
+                    </td>
                     <td>Rs ${order.price}</td>
                     <td><strong>Rs ${order.total}</strong></td>
                     <td>${order.address}</td>
@@ -645,6 +686,16 @@
                     </td>
                 </tr>
             `).join('');
+        }
+
+        // Change order quantity from table controls
+        function changeOrderQty(index, delta) {
+            const order = orders[index];
+            if (!order) return;
+            order.quantity = Math.max(1, (order.quantity || 1) + delta);
+            order.total = order.price * order.quantity;
+            localStorage.setItem('orders', JSON.stringify(orders));
+            renderOrders();
         }
 
         // Edit order
@@ -682,6 +733,21 @@
                 closePopup();
             }
         });
+
+        // Quantity buttons in the form
+        const qtyPlusBtn = document.getElementById('qtyPlus');
+        const qtyMinusBtn = document.getElementById('qtyMinus');
+        const qtyInputField = document.getElementById('quantity');
+        if (qtyPlusBtn && qtyMinusBtn && qtyInputField) {
+            qtyPlusBtn.addEventListener('click', () => {
+                const v = parseInt(qtyInputField.value) || 1;
+                qtyInputField.value = v + 1;
+            });
+            qtyMinusBtn.addEventListener('click', () => {
+                const v = parseInt(qtyInputField.value) || 1;
+                if (v > 1) qtyInputField.value = v - 1;
+            });
+        }
 
         // Initial render
         renderOrders();

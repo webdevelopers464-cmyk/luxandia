@@ -161,6 +161,34 @@
         width: 50px;
         border-radius: 12px;
     }
+
+    /* Quantity control */
+    .qty-control {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .qty-control .qty-btn {
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        border: none;
+        background: #fff;
+        cursor: pointer;
+        font-size: 18px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .qty-control input[type="text"] {
+        width: 52px;
+        text-align: center;
+        padding: 8px 6px;
+        border-radius: 8px;
+        border: 1px solid #e6e6e6;
+        background: #fff;
+        font-weight: 600;
+    }
     form .button
     {
         background: #fb0303;
@@ -795,7 +823,11 @@
                     </div> -->
                     <div class="quantity-select">
                         <p>Quantity</p>
-                        <input type="number" value="1">
+                        <div class="qty-control">
+                            <button type="button" class="qty-btn" onclick="changeQty(this, -1)">−</button>
+                            <input type="text" value="1" readonly>
+                            <button type="button" class="qty-btn" onclick="changeQty(this, 1)">+</button>
+                        </div>
                     </div>
                     <a class="button" href="./ordered.html"><div>Buy Now</button></a>
                 </form>
@@ -826,6 +858,14 @@
         //    }
         //    this.classList.add("active")
         //}
+        function changeQty(btn, delta) {
+            const wrap = btn.closest('.qty-control');
+            if (!wrap) return;
+            const input = wrap.querySelector('input');
+            let v = parseInt(input.value) || 1;
+            v = Math.max(1, v + delta);
+            input.value = v;
+        }
     </script>
 </body>
 </html>

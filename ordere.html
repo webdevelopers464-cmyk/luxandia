@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ordered Place PRO</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #f0f2f5;
+            --bg-secondary: #ffffff;
+            --bg-header: #3d5a80;
+            --text-primary: #2c3e50;
+            --text-secondary: #7f8c8d;
+            --border-color: #dfe4ea;
+            --button-primary: #4caf50;
+            --button-danger: #e74c3c;
+            --button-warning: #f39c12;
+            --shadow: rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark-mode {
+            --bg-primary: #1a1a2e;
+            --bg-secondary: #16213e;
+            --bg-header: #0f3460;
+            --text-primary: #eaeaea;
+            --text-secondary: #a0a0a0;
+            --border-color: #2d3748;
+            --shadow: rgba(0, 0, 0, 0.3);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background: var(--bg-header);
+            color: white;
+            padding: 1.5rem 2rem;
+            box-shadow: 0 2px 10px var(--shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            font-weight: 600;
+        }
+
+        /* Dark Mode Toggle */
+        .theme-toggle {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 30px;
+            background: #ccc;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .toggle-switch.active {
+            background: #4caf50;
+        }
+
+        .toggle-slider {
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 24px;
+            height: 24px;
+            background: white;
+            border-radius: 50%;
+            transition: transform 0.3s;
+        }
+
+        .toggle-switch.active .toggle-slider {
+            transform: translateX(30px);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        /* Order Form Card */
+        .order-form-card {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            margin-bottom: 3rem;
+            animation: slideDown 0.5s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .order-form-card h2 {
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.9rem;
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Poppins', sans-serif;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #4caf50;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        /* Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--button-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .submit-btn:hover {
+            background: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        /* Orders Section */
+        .orders-section {
+            background: var(--bg-secondary);
+            border-radius: 15px;
+            padding: 2.5rem;
+            box-shadow: 0 4px 20px var(--shadow);
+            animation: fadeIn 0.6s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        .orders-section h2 {
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            color: var(--text-primary);
+        }
+
+        /* Table Styles */
+        .orders-table {
+            width: 100%;
+            border-collapse: collapse;
+            overflow-x: auto;
+        }
+
+        .orders-table thead {
+            background: var(--bg-header);
+            color: white;
+        }
+
+        .orders-table th {
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+
+        .orders-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .orders-table tbody tr {
+            transition: background 0.2s;
+        }
+
+        .orders-table tbody tr:hover {
+            background: var(--bg-primary);
+        }
+
+        /* Action Buttons */
+        .action-btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+            margin-right: 0.5rem;
+        }
+
+        .edit-btn {
+            background: var(--button-warning);
+            color: white;
+        }
+
+        .edit-btn:hover {
+            background: #e67e22;
+            transform: scale(1.05);
+        }
+
+        .delete-btn {
+            background: var(--button-danger);
+            color: white;
+        }
+
+        .delete-btn:hover {
+            background: #c0392b;
+            transform: scale(1.05);
+        }
+
+        /* Success Popup */
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            animation: fadeIn 0.3s;
+        }
+
+        .popup-overlay.active {
+            display: flex;
+        }
+
+        .popup {
+            background: var(--bg-secondary);
+            padding: 3rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.3);
+            animation: popIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-width: 400px;
+            width: 90%;
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0.5);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .popup .success-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+        }
+
+        .popup h3 {
+            margin-bottom: 1rem;
+            color: var(--button-primary);
+            font-size: 1.8rem;
+        }
+
+        .popup p {
+            margin-bottom: 2rem;
+            color: var(--text-secondary);
+        }
+
+        .popup-close-btn {
+            padding: 0.8rem 2rem;
+            background: var(--button-primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .popup-close-btn:hover {
+            background: #45a049;
+            transform: scale(1.05);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--text-secondary);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.5;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .order-form-card,
+            .orders-section {
+                padding: 1.5rem;
+            }
+
+            header h1 {
+                font-size: 1.3rem;
+            }
+
+            .orders-table {
+                font-size: 0.85rem;
+            }
+
+            .orders-table th,
+            .orders-table td {
+                padding: 0.6rem;
+            }
+
+            .action-btn {
+                padding: 0.4rem 0.7rem;
+                font-size: 0.8rem;
+                margin-bottom: 0.3rem;
+            }
+        }
+
+        /* Table wrapper for mobile scroll */
+        .table-wrapper {
+            overflow-x: auto;
+        }
+        /* Quantity control */
+        .qty-control {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .qty-control .qty-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: white;
+            cursor: pointer;
+            font-size: 18px;
+            line-height: 0;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+        }
+
+        .qty-control input[type="text"] {
+            width: 48px;
+            text-align: center;
+            padding: 8px 6px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <h1>Ordered Place</h1>
+        <div class="theme-toggle">
+            <span style="font-size: 1.2rem;">☀️</span>
+            <div class="toggle-switch" id="themeToggle">
+                <div class="toggle-slider"></div>
+            </div>
+            <span style="font-size: 1.2rem;">🌙</span>
+        </div>
+    </header>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Order Form -->
+        <div class="order-form-card">
+                <h2>Place Your Order</h2>
+            <form id="orderForm" action="https://formspree.io/f/xdalzpqb" method="POST">
+            <!-- <form action="https://formspree.io/f/xdalzpqb" method="POST"> -->
+                <div class="form-group">
+                    <label for="fullName">Full Name</label>
+                    <input type="text" id="fullName" name="fullName" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="phoneNumber">Phone Number</label>
+                    <input type="tel" id="phoneNumber" name="phoneNumber" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="product">Product</label>
+                    <select id="product" name="product" required>
+                        <option value="">Select a product</option>
+                        <option value="Floralia - Rs 1500">Floralia - Rs 1500</option>
+                        <option value="Mystic Rose - Rs 1800">Mystic Rose - Rs 1800</option>
+                        <option value="Ocean Breeze - Rs 1600">Ocean Breeze - Rs 1600</option>
+                        <option value="Velvet Noir - Rs 2000">Velvet Noir - Rs 2000</option>
+                        <option value="Golden Amber - Rs 1700">Golden Amber - Rs 1700</option>
+                        <option value="Lavender Dreams - Rs 1400">Lavender Dreams - Rs 1400</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <div class="qty-control">
+                        <button type="button" class="qty-btn" id="qtyMinus">−</button>
+                        <input type="text" id="quantity" name="quantity" value="1" readonly required>
+                        <button type="button" class="qty-btn" id="qtyPlus">+</button>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" placeholder="Enter your delivery address" required></textarea>
+                </div>
+                    <button type="submit" class="submit-btn">Submit Order</button>
+            </form>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="orders-section">
+            <h2>Orders</h2>
+            <div class="table-wrapper">
+                <table class="orders-table">
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Phone</th>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                            <th>Total</th>
+                            <th>Address</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="ordersTableBody">
+                        <!-- Orders will be dynamically inserted here -->
+                    </tbody>
+                </table>
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div class="empty-state-icon">📦</div>
+                    <h3>No Orders Yet</h3>
+                    <p>Your orders will appear here once you place them</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Popup -->
+    <div class="popup-overlay" id="successPopup">
+        <div class="popup">
+            <div class="success-icon">✅</div>
+            <h3>Order Placed Successfully!</h3>
+            <p>Your order has been received and will be processed shortly.</p>
+            <button class="popup-close-btn" onclick="closePopup()">Close</button>
+        </div>
+    </div>
+
+    <script>
+
+        // Initialize orders array from localStorage
+        let orders = JSON.parse(localStorage.getItem('orders')) || [];
+        let editingIndex = -1;
+
+        // Dark mode functionality
+        const themeToggle = document.getElementById('themeToggle');
+        const body = document.body;
+
+        // Load saved theme
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark') {
+            body.classList.add('dark-mode');
+            themeToggle.classList.add('active');
+        }
+
+        themeToggle.addEventListener('click', () => {
+            body.classList.toggle('dark-mode');
+            themeToggle.classList.toggle('active');
+            
+            // Save theme preference
+            if (body.classList.contains('dark-mode')) {
+                localStorage.setItem('theme', 'dark');
+            } else {
+                localStorage.setItem('theme', 'light');
+            }
+        });
+
+        // Form submission
+        document.getElementById('orderForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const form = this;
+            const fullName = document.getElementById('fullName').value.trim();
+            const phoneNumber = document.getElementById('phoneNumber').value.trim();
+            const emailValue = document.getElementById('email').value.trim();
+            const product = document.getElementById('product').value;
+            const quantity = parseInt(document.getElementById('quantity').value);
+            const address = document.getElementById('address').value.trim();
+
+            // Validate all fields
+            if (!fullName || !phoneNumber || !emailValue || !product || !quantity || !address) {
+                alert('Please fill in all fields!');
+                return;
+            }
+
+            // Extract price from product string
+            const priceMatch = product.match(/Rs (\d+)/);
+            const price = priceMatch ? parseInt(priceMatch[1]) : 0;
+            const total = price * quantity;
+
+            const order = {
+                fullName,
+                phoneNumber,
+                email: emailValue,
+                product,
+                quantity,
+                price,
+                total,
+                address,
+                date: new Date().toLocaleString()
+            };
+
+            if (editingIndex === -1) {
+                // Add new order
+                orders.push(order);
+            } else {
+                // Update existing order
+                orders[editingIndex] = order;
+                editingIndex = -1;
+                document.querySelector('.submit-btn').textContent = 'Submit Order';
+            }
+
+            // Save to localStorage
+            localStorage.setItem('orders', JSON.stringify(orders));
+
+            // Render orders FIRST
+            renderOrders();
+
+            // Show success popup
+            showPopup();
+
+            // Send to Formspree using fetch
+            const formData = new FormData(form);
+            fetch(form.action, {
+                method: "POST",
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            }).catch(err => console.log('Formspree submission complete'));
+
+            // Reset form
+            form.reset();
+        });
+
+        // Show popup
+        function showPopup() {
+            const popup = document.getElementById('successPopup');
+            popup.classList.add('active');
+        }
+
+        // Close popup
+        function closePopup() {
+            const popup = document.getElementById('successPopup');
+            popup.classList.remove('active');
+        }
+
+        // Render orders in table
+        function renderOrders() {
+            const tbody = document.getElementById('ordersTableBody');
+            const emptyState = document.getElementById('emptyState');
+
+            if (orders.length === 0) {
+                tbody.innerHTML = '';
+                emptyState.style.display = 'block';
+                return;
+            }
+
+            emptyState.style.display = 'none';
+
+            tbody.innerHTML = orders.map((order, index) => `
+                <tr>
+                    <td>${order.fullName}</td>
+                    <td>${order.phoneNumber}</td>
+                    <td>${order.product.split(' - ')[0]}</td>
+                    <td>
+                        <div class="qty-control">
+                            <button class="qty-btn" onclick="changeOrderQty(${index}, -1)">−</button>
+                            <span id="order-qty-${index}" style="min-width:32px;display:inline-block;text-align:center;font-weight:600">${order.quantity}</span>
+                            <button class="qty-btn" onclick="changeOrderQty(${index}, 1)">+</button>
+                        </div>
+                    </td>
+                    <td>Rs ${order.price}</td>
+                    <td><strong>Rs ${order.total}</strong></td>
+                    <td>${order.address}</td>
+                    <td>
+                        <button class="action-btn edit-btn" onclick="editOrder(${index})">
+                            ✏️ Edit
+                        </button>
+                        <button class="action-btn delete-btn" onclick="deleteOrder(${index})">
+                            🗑️ Delete
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        // Change order quantity from table controls
+        function changeOrderQty(index, delta) {
+            const order = orders[index];
+            if (!order) return;
+            order.quantity = Math.max(1, (order.quantity || 1) + delta);
+            order.total = order.price * order.quantity;
+            localStorage.setItem('orders', JSON.stringify(orders));
+            renderOrders();
+        }
+
+        // Edit order
+        function editOrder(index) {
+            const order = orders[index];
+            editingIndex = index;
+
+            // Fill form with order data
+            document.getElementById('fullName').value = order.fullName;
+            document.getElementById('phoneNumber').value = order.phoneNumber;
+            document.getElementById('email').value = order.email || '';
+            document.getElementById('product').value = order.product;
+            document.getElementById('quantity').value = order.quantity;
+            document.getElementById('address').value = order.address;
+
+            // Change button text
+            document.querySelector('.submit-btn').textContent = 'Update Order';
+
+            // Scroll to form
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Delete order
+        function deleteOrder(index) {
+            if (confirm('Are you sure you want to delete this order?')) {
+                orders.splice(index, 1);
+                localStorage.setItem('orders', JSON.stringify(orders));
+                renderOrders();
+            }
+        }
+
+        // Close popup when clicking outside
+        document.getElementById('successPopup').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closePopup();
+            }
+        });
+
+        // Quantity buttons in the form
+        const qtyPlusBtn = document.getElementById('qtyPlus');
+        const qtyMinusBtn = document.getElementById('qtyMinus');
+        const qtyInputField = document.getElementById('quantity');
+        if (qtyPlusBtn && qtyMinusBtn && qtyInputField) {
+            qtyPlusBtn.addEventListener('click', () => {
+                const v = parseInt(qtyInputField.value) || 1;
+                qtyInputField.value = v + 1;
+            });
+            qtyMinusBtn.addEventListener('click', () => {
+                const v = parseInt(qtyInputField.value) || 1;
+                if (v > 1) qtyInputField.value = v - 1;
+            });
+        }
+
+        // Initial render
+        renderOrders();
+    </script>
+</body>
+</html>

@@ -535,24 +535,20 @@
         // };
         // document.head.appendChild(script);
 
-        document.getElementById("order-form").addEventListener("submit", function(event) {
-            event.preventDefault();
-            
-            emailjs.sendForm(
-                "service_bkb6mr9",
-                "template_2evwcws",
-            this
-            ).then(function() {
-            
-            alert("Order sent successfully!");
-            
-            }, function(error) {
-            
-            alert("Failed to send order");
-            
-            });
+// Make sure to include EmailJS SDK in your HTML first
+// <script src="https://cdn.emailjs.com/dist/email.min.js">
+// emailjs.init("YOUR_PUBLIC_KEY");
+// <------------------------------------------order form===----------------->
+document.getElementById('order-form').addEventListener('submit', function(e) {
+    e.preventDefault();
 
-        });
+    emailjs.sendForm('service_bl83v4k', 'template_6yj68gh', this)
+      .then(() => {
+        alert('Email sent successfully!');
+      }, (error) => {
+        console.error('Failed to send email:', error);
+      });
+});
 
         // Initialize orders array from localStorage
         let orders = JSON.parse(localStorage.getItem('orders')) || [];
